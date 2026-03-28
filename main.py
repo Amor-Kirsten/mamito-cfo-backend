@@ -11,7 +11,8 @@ import schemas
 from database import engine, get_db
 from pdf_report import generate_daily_report, generate_receipt
 
-models.Base.metadata.create_all(bind=engine)
+# Table creation moved to setup_db.py to prevent Vercel Serverless boot crashing
+# from DDL queries via Supabase Transaction Pooler.
 
 app = FastAPI()
 
