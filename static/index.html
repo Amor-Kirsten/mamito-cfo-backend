@@ -297,102 +297,51 @@
   .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 123, 0, 0.4); }
   .btn:active { transform: translateY(1px); }
 
-  /* RECORDS */
-  .table-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
+  /* TABLE STYLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    text-align: left;
+    font-size: 0.85rem;
   }
-  .table-head {
-    background: var(--navy);
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .table-head h3 {
+  .data-table th {
+    background: var(--navy-light);
     color: white;
-    font-size: 0.8rem;
     font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .btn-csv {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 700;
+    padding: 14px 16px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
+    font-size: 0.75rem;
   }
-  .btn-csv:hover { background: rgba(255,255,255,0.2); }
-
-  .sale-item {
-    padding: 20px;
+  .data-table td {
+    padding: 14px 16px;
     border-bottom: 1px solid #E2E8F0;
-    position: relative;
-    background: #fff;
-    transition: background 0.2s;
+    color: var(--navy);
+    vertical-align: middle;
   }
-  .sale-item:hover { background: #F8FAFC; }
-  .sale-item:last-child { border-bottom: none; }
-  
-  .sale-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+  .data-table tbody tr:hover {
+    background: #F8FAFC;
   }
-  .sale-date-lbl { font-weight: 800; color: var(--navy); font-size: 1rem; }
-  .sale-total { font-weight: 900; color: var(--orange); font-size: 1.15rem; }
-  
-  .sale-details { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-  .tag {
-    display: inline-block;
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-  .tag-size { background: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
-  .tag-qty { background: #FFF7ED; color: #C2410C; border: 1px solid #FFEDD5; }
-  .tag-cash { background: #F0FDF4; color: #166534; border: 1px solid #DCFCE7; }
-  .tag-mpesa { background: #EFF6FF; color: #1E40AF; border: 1px solid #DBEAFE; }
-  .tag-credit { background: #FFF1F2; color: #BE123C; border: 1px solid #FFE4E6; }
+  .td-bold { font-weight: 800; }
+  .td-money { font-weight: 900; color: var(--orange); }
 
   .item-actions {
     display: flex;
     gap: 8px;
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px dashed #E2E8F0;
   }
-
   .btn-action {
-    flex: 1;
     background: #F1F5F9;
     border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
     font-family: inherit;
     font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
     color: #475569;
     cursor: pointer;
     transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
   }
   .btn-action:hover { background: #E2E8F0; }
   .btn-action.del:hover { background: #FEE2E2; color: #EF4444; }
@@ -404,15 +353,8 @@
     padding: 40px 20px;
     color: #94A3B8;
   }
-  .empty-icon {
-    font-size: 3rem;
-    margin-bottom: 12px;
-    opacity: 0.5;
-  }
-  .empty-text {
-    font-size: 0.95rem;
-    font-weight: 700;
-  }
+  .empty-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
+  .empty-text { font-size: 0.95rem; font-weight: 700; }
 
   /* TOAST */
   .toast {
@@ -435,12 +377,6 @@
     gap: 10px;
   }
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-  /* Responsive Adjustments */
-  @media (max-width: 480px) {
-    .pay-row { grid-template-columns: 1fr; }
-    .item-actions { flex-direction: column; }
-  }
 </style>
 </head>
 <body>
@@ -561,16 +497,30 @@
     <button class="btn" onclick="addSale()">Complete Transaction</button>
   </div>
 
-  <!-- RECORDS -->
-  <div class="table-card">
+  <!-- RECORDS (STRUCTURED TABLE) -->
+  <div class="table-card" style="overflow-x: auto; max-width: 100%;">
     <div class="table-head">
-      <h3>Recent Transactions</h3>
+      <h3>Structured Records</h3>
       <div style="display:flex; gap:8px;">
-        <button class="btn-csv" style="border-color:#10B981; color:#10B981;" onclick="downloadPDF()">📄 Daily Report</button>
+        <button class="btn-csv" style="border-color:#10B981; color:#10B981;" onclick="downloadPDF()">📄 PDF Report</button>
         <button class="btn-csv" onclick="exportCSV()">⬇ CSV</button>
       </div>
     </div>
-    <div id="records"></div>
+    
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Size</th>
+          <th>Qty</th>
+          <th>Payments</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="records">
+      </tbody>
+    </table>
   </div>
 
 </main>
@@ -595,7 +545,6 @@
     document.getElementById('l-pay').style.display = lq ? 'block' : 'none';
     document.getElementById('s-pay').style.display = sq ? 'block' : 'none';
     
-    // Animate numbers smoothly
     document.getElementById('l-sub').textContent = 'KES ' + (lq * LP).toLocaleString();
     document.getElementById('s-sub').textContent = 'KES ' + (sq * SP).toLocaleString();
     document.getElementById('grand').textContent = 'KES ' + (lq * LP + sq * SP).toLocaleString();
@@ -605,14 +554,20 @@
 
   async function loadSales() {
     try {
-      const res = await fetch('/api/sales');
+      // Added a cache-busting timestamp specifically for Vercel
+      const res = await fetch('/api/sales?_t=' + new Date().getTime(), {
+        headers: { 'Cache-Control': 'no-cache' }
+      });
       if (res.ok) {
         sales = await res.json();
         render(); stats();
+      } else {
+        const text = await res.text();
+        console.error("Fetch Data Error:", text);
       }
     } catch(err) {
       console.error(err);
-      toast('⚠️ Failed to load data');
+      toast('⚠️ Failed to load connection');
     }
   }
 
@@ -648,12 +603,14 @@
       if (res.ok) {
         await loadSales();
         reset();
-        toast('✅ Transaction Successful!');
+        toast('✅ Transaction Saved!');
       } else {
-        toast('⚠️ Failed to save');
+        const errorText = await res.text();
+        console.error("Save Error:", errorText);
+        toast('⚠️ Save API Error: ' + errorText.substring(0, 60));
       }
     } catch(err) {
-      toast('⚠️ Network Error');
+      toast('⚠️ Network Error: Offline');
     }
   }
 
@@ -664,8 +621,6 @@
       if (res.ok) {
         await loadSales();
         toast('🗑 Record Deleted');
-      } else {
-        toast('⚠️ Failed to delete');
       }
     } catch(err) {
       toast('⚠️ Network error');
@@ -673,63 +628,64 @@
   }
 
   function downloadReceipt(id) {
-    try {
-        window.location.href = '/api/sales/' + id + '/receipt';
-        toast('📄 Generating Receipt...');
-    } catch(err) {
-        toast('⚠️ Download Failed');
-    }
-  }
-
-  function fmtDate(d) {
-    return new Date(d + 'T00:00:00').toLocaleDateString('en-KE', { day:'numeric', month:'short', year:'numeric' });
+    window.location.href = '/api/sales/' + id + '/receipt';
   }
 
   function payTags(o) {
     if (!o) return '';
-    let t = '';
-    if (o.cash > 0)   t += `<span class="tag tag-cash">Cash ${o.cash.toLocaleString()}</span> `;
-    if (o.mpesa > 0)  t += `<span class="tag tag-mpesa">M-Pesa ${o.mpesa.toLocaleString()}</span> `;
-    if (o.credit > 0) t += `<span class="tag tag-credit">Credit ${o.credit.toLocaleString()}</span> `;
-    if (!o.cash && !o.mpesa && !o.credit) t += `<span class="tag tag-size">Unallocated</span>`;
-    return t;
+    let pieces = [];
+    if (o.cash > 0)   pieces.push(`<span style="color:#166534">Cash (${o.cash})</span>`);
+    if (o.mpesa > 0)  pieces.push(`<span style="color:#1E40AF">M-Pesa (${o.mpesa})</span>`);
+    if (o.credit > 0) pieces.push(`<span style="color:#BE123C">Credit (${o.credit})</span>`);
+    if (pieces.length === 0) pieces.push(`<span style="color:#64748B">Unallocated</span>`);
+    return pieces.join(' • ');
   }
 
   function render() {
     const el = document.getElementById('records');
     if (!sales.length) { 
-      el.innerHTML = `
-        <div class="empty">
-          <div class="empty-icon">🥜</div>
-          <div class="empty-text">No transactions recorded yet</div>
-        </div>`; 
+      el.innerHTML = `<tr><td colspan="6" class="empty"><div class="empty-icon">🥜</div><div class="empty-text">No transactions recorded yet</div></td></tr>`; 
       return; 
     }
-    el.innerHTML = [...sales].reverse().map(s => `
-      <div class="sale-item">
-        <div class="sale-meta">
-          <div class="sale-date-lbl">${fmtDate(s.date)} <span style="font-weight:400; color:#94A3B8; font-size:0.8rem; margin-left:8px;">#${s.id}</span></div>
-          <div class="sale-total">KES ${s.total.toLocaleString()}</div>
-        </div>
-        
-        ${s.large ? `<div class="sale-details" style="margin-bottom:8px">
-          <span class="tag tag-size">800g</span>
-          <span class="tag tag-qty">×${s.large.qty}</span>
-          ${payTags(s.large)}
-        </div>` : ''}
-        
-        ${s.small ? `<div class="sale-details">
-          <span class="tag tag-size">400g</span>
-          <span class="tag tag-qty">×${s.small.qty}</span>
-          ${payTags(s.small)}
-        </div>` : ''}
-
-        <div class="item-actions">
-          <button class="btn-action receipt" onclick="downloadReceipt(${s.id})">📄 Download Receipt</button>
-          <button class="btn-action del" onclick="del(${s.id})">🗑 Delete</button>
-        </div>
-      </div>
-    `).join('');
+    
+    let html = '';
+    [...sales].reverse().forEach(s => {
+      // Build rows for each size to simulate a structured flat table
+      if (s.large) {
+        html += `
+        <tr>
+          <td class="td-bold">#${s.id}</td>
+          <td><span class="tag tag-size">800g</span></td>
+          <td class="td-bold">x${s.large.qty}</td>
+          <td style="font-size: 0.7rem; font-weight:700;">${payTags(s.large)}</td>
+          <td class="td-money">KES ${s.large.total.toLocaleString()}</td>
+          <td>
+            <div class="item-actions">
+              <button class="btn-action receipt" onclick="downloadReceipt(${s.id})" title="Receipt">📄</button>
+              <button class="btn-action del" onclick="del(${s.id})" title="Delete">🗑</button>
+            </div>
+          </td>
+        </tr>`;
+      }
+      
+      if (s.small) {
+        html += `
+        <tr>
+          <td class="td-bold">#${s.id}</td>
+          <td><span class="tag tag-size" style="background:#FFF7ED;color:#C2410C;">400g</span></td>
+          <td class="td-bold">x${s.small.qty}</td>
+          <td style="font-size: 0.7rem; font-weight:700;">${payTags(s.small)}</td>
+          <td class="td-money">KES ${s.small.total.toLocaleString()}</td>
+          <td>
+            <div class="item-actions">
+              <button class="btn-action receipt" onclick="downloadReceipt(${s.id})" title="Receipt">📄</button>
+              <button class="btn-action del" onclick="del(${s.id})" title="Delete">🗑</button>
+            </div>
+          </td>
+        </tr>`;
+      }
+    });
+    el.innerHTML = html;
   }
 
   function stats() {

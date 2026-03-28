@@ -32,7 +32,8 @@ def read_index():
     return FileResponse("static/index.html")
 
 @app.get("/api/sales", response_model=List[schemas.SaleResponse])
-def read_sales(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_sales(response: Response, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     sales = db.query(models.Sale).offset(skip).limit(limit).all()
     
     response_list = []
