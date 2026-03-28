@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException
-from fastapi.responses import FileResponse, Response
+from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi.responses import FileResponse, Response, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 import os
+import traceback
 
 import models
 import schemas
@@ -15,6 +16,12 @@ from pdf_report import generate_daily_report, generate_receipt
 # from DDL queries via Supabase Transaction Pooler.
 
 app = FastAPI()
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    err_msg = str(exc)
+    print("FATAL ERROR:", traceback.format_exc())
+    return Response(content=f"Database Crash: {err_msg}", status_code=500)
 
 app.add_middleware(
     CORSMiddleware,
