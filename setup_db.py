@@ -26,7 +26,8 @@ def init_db():
             
     print("\nConnecting to database...")
     try:
-        engine = create_engine(url)
+        from sqlalchemy.pool import NullPool
+        engine = create_engine(url, poolclass=NullPool)
         models.Base.metadata.create_all(bind=engine)
         print("✅ Database tables successfully created!")
         print("You can now securely use the app.")
