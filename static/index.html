@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamito Sales | Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF7B00;
+    --orange-dark: #D96900;
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --bg-gray: #F8FAFC;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    color: var(--navy);
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 2rem;
+    color: var(--orange);
+    line-height: 1;
+    text-shadow: 0 2px 10px rgba(255, 123, 0, 0.3);
+  }
+  .tagline {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .header-badge {
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(255, 123, 0, 0.3);
+  }
+
+  main { padding: 24px 16px; max-width: 540px; margin: 0 auto; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #64748B;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  .stat {
+    background: var(--navy-light);
+    border-radius: 16px;
+    padding: 18px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .stat:hover { transform: translateY(-3px); }
+  .stat.wide { 
+    grid-column: 1 / -1; 
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark)); 
+  }
+  .stat .lbl {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+    margin-bottom: 6px;
+  }
+  .stat .val {
+    font-size: 1.7rem;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .stat::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* FORM CARD (GLASSMORPHISM) */
+  .card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+  }
+  .card h2 {
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2::before {
+    content: '';
+    display: block;
+    width: 8px; height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+  }
+
+  .field { margin-bottom: 18px; }
+  label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #475569;
+    margin-bottom: 8px;
+  }
+  input, select {
+    width: 100%;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    background: #fff;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FF7B00' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  input:focus, select:focus { 
+    border-color: var(--orange); 
+    box-shadow: 0 0 0 4px rgba(255, 123, 0, 0.15);
+  }
+
+  /* TIN SECTIONS */
+  .tin-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 18px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  }
+  .tin-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #E2E8F0;
+  }
+  .tin-pill {
+    background: var(--navy-light);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .tin-pill.large { background: var(--orange); }
+  .tin-price-tag {
+    font-size: 0.85rem;
+    color: #64748B;
+    font-weight: 700;
+  }
+
+  .pay-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .pay-field label { font-size: 0.65rem; color: #64748B; }
+  .pay-field input { padding: 12px 10px; font-size: 0.95rem; text-align: center; }
+
+  .divider {
+    text-align: center;
+    color: #94A3B8;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 16px 0 0;
+    position: relative;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    position: absolute;
+    top: 50%; width: 25%; height: 1px;
+    background: #E2E8F0;
+  }
+  .divider::before { left: 0; }
+  .divider::after { right: 0; }
+
+  .subtotal-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed #E2E8F0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #64748B;
+  }
+  .subtotal-line span { color: var(--navy); font-size: 1.1rem; font-weight: 900; }
+
+  .grand-total {
+    background: linear-gradient(135deg, var(--navy-light), var(--navy));
+    color: white;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.2);
+  }
+  .grand-total .lbl { font-size: 0.75rem; font-weight: 800; opacity: 0.8; letter-spacing: 1.5px; text-transform: uppercase; }
+  .grand-total .val { font-size: 1.6rem; font-weight: 900; color: var(--orange); }
+
+  .btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 123, 0, 0.3);
+    transition: all 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 123, 0, 0.4); }
+  .btn:active { transform: translateY(1px); }
+
+  /* RECORDS */
+  .table-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .table-head {
+    background: var(--navy);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .table-head h3 {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .btn-csv {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-csv:hover { background: rgba(255,255,255,0.2); }
+
+  .sale-item {
+    padding: 20px;
+    border-bottom: 1px solid #E2E8F0;
+    position: relative;
+    background: #fff;
+    transition: background 0.2s;
+  }
+  .sale-item:hover { background: #F8FAFC; }
+  .sale-item:last-child { border-bottom: none; }
+  
+  .sale-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .sale-date-lbl { font-weight: 800; color: var(--navy); font-size: 1rem; }
+  .sale-total { font-weight: 900; color: var(--orange); font-size: 1.15rem; }
+  
+  .sale-details { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .tag {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .tag-size { background: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
+  .tag-qty { background: #FFF7ED; color: #C2410C; border: 1px solid #FFEDD5; }
+  .tag-cash { background: #F0FDF4; color: #166534; border: 1px solid #DCFCE7; }
+  .tag-mpesa { background: #EFF6FF; color: #1E40AF; border: 1px solid #DBEAFE; }
+  .tag-credit { background: #FFF1F2; color: #BE123C; border: 1px solid #FFE4E6; }
+
+  .item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed #E2E8F0;
+  }
+
+  .btn-action {
+    flex: 1;
+    background: #F1F5F9;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-action:hover { background: #E2E8F0; }
+  .btn-action.del:hover { background: #FEE2E2; color: #EF4444; }
+  .btn-action.receipt { background: #FFF7ED; color: #EA580C; }
+  .btn-action.receipt:hover { background: #FFEDD5; }
+
+  .empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #94A3B8;
+  }
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+  .empty-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--navy);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    z-index: 1000;
+    border-left: 4px solid var(--orange);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* Responsive Adjustments */
+  @media (max-width: 480px) {
+    .pay-row { grid-template-columns: 1fr; }
+    .item-actions { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div>
+      <div class="logo">Mamito</div>
+      <div class="tagline">Peanut Butter System</div>
+    </div>
+  </div>
+  <div class="header-badge">Sales Terminal</div>
+</header>
+
+<main>
+
+  <div class="section-title">Today's Overview</div>
+  <div class="stats">
+    <div class="stat wide">
+      <div class="lbl">Total Revenue</div>
+      <div class="val" id="s-rev">KES 0</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">800g Tins Added</div>
+      <div class="val" id="s-large">0</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">400g Tins Added</div>
+      <div class="val" id="s-small">0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Record New Transaction</h2>
+
+    <div class="field">
+      <label>Date of Sale</label>
+      <input type="date" id="f-date">
+    </div>
+
+    <!-- 800g SECTION -->
+    <div class="tin-section">
+      <div class="tin-title">
+        <span class="tin-pill large">800g Premium Tin</span>
+        <span class="tin-price-tag">KES 500 / unit</span>
+      </div>
+      <div class="field" style="margin:0">
+        <label>Quantity Sold</label>
+        <select id="l-qty">
+          <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+          <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
+          <option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option>
+          <option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option>
+          <option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
+        </select>
+      </div>
+      <div id="l-pay" style="display:none; animation: fadeIn 0.3s;">
+        <div class="divider">Payment Split (Qty Tins)</div>
+        <div class="pay-row">
+          <div class="pay-field">
+            <label>Cash</label>
+            <input type="number" id="l-cash" placeholder="0" min="0" inputmode="numeric">
+          </div>
+          <div class="pay-field">
+            <label>M-Pesa</label>
+            <input type="number" id="l-mpesa" placeholder="0" min="0" inputmode="numeric">
+          </div>
+          <div class="pay-field">
+            <label>Credit</label>
+            <input type="number" id="l-credit" placeholder="0" min="0" inputmode="numeric">
+          </div>
+        </div>
+        <div class="subtotal-line">Subtotal <span id="l-sub">KES 0</span></div>
+      </div>
+    </div>
+
+    <!-- 400g SECTION -->
+    <div class="tin-section">
+      <div class="tin-title">
+        <span class="tin-pill">400g Standard Tin</span>
+        <span class="tin-price-tag">KES 250 / unit</span>
+      </div>
+      <div class="field" style="margin:0">
+        <label>Quantity Sold</label>
+        <select id="s-qty">
+          <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+          <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
+          <option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option>
+          <option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option>
+          <option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
+        </select>
+      </div>
+      <div id="s-pay" style="display:none; animation: fadeIn 0.3s;">
+        <div class="divider">Payment Split (Qty Tins)</div>
+        <div class="pay-row">
+          <div class="pay-field">
+            <label>Cash</label>
+            <input type="number" id="s-cash" placeholder="0" min="0" inputmode="numeric">
+          </div>
+          <div class="pay-field">
+            <label>M-Pesa</label>
+            <input type="number" id="s-mpesa" placeholder="0" min="0" inputmode="numeric">
+          </div>
+          <div class="pay-field">
+            <label>Credit</label>
+            <input type="number" id="s-credit" placeholder="0" min="0" inputmode="numeric">
+          </div>
+        </div>
+        <div class="subtotal-line">Subtotal <span id="s-sub">KES 0</span></div>
+      </div>
+    </div>
+
+    <div class="grand-total">
+      <div class="lbl">Transaction Total</div>
+      <div class="val" id="grand">KES 0</div>
+    </div>
+
+    <button class="btn" onclick="addSale()">Complete Transaction</button>
+  </div>
+
+  <!-- RECORDS -->
+  <div class="table-card">
+    <div class="table-head">
+      <h3>Recent Transactions</h3>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-csv" style="border-color:#10B981; color:#10B981;" onclick="downloadPDF()">📄 Daily Report</button>
+        <button class="btn-csv" onclick="exportCSV()">⬇ CSV</button>
+      </div>
+    </div>
+    <div id="records"></div>
+  </div>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<style>
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script>
+  const LP = 500, SP = 250;
+  const today = new Date().toISOString().split('T')[0];
+  let sales = [];
+
+  document.getElementById('f-date').value = today;
+
+  function g(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+  function updateUI() {
+    const lq = parseInt(document.getElementById('l-qty').value) || 0;
+    const sq = parseInt(document.getElementById('s-qty').value) || 0;
+    document.getElementById('l-pay').style.display = lq ? 'block' : 'none';
+    document.getElementById('s-pay').style.display = sq ? 'block' : 'none';
+    
+    // Animate numbers smoothly
+    document.getElementById('l-sub').textContent = 'KES ' + (lq * LP).toLocaleString();
+    document.getElementById('s-sub').textContent = 'KES ' + (sq * SP).toLocaleString();
+    document.getElementById('grand').textContent = 'KES ' + (lq * LP + sq * SP).toLocaleString();
+  }
+
+  ['l-qty','s-qty'].forEach(id => document.getElementById(id).addEventListener('change', updateUI));
+
+  async function loadSales() {
+    try {
+      const res = await fetch('/api/sales');
+      if (res.ok) {
+        sales = await res.json();
+        render(); stats();
+      }
+    } catch(err) {
+      console.error(err);
+      toast('⚠️ Failed to load data');
+    }
+  }
+
+  async function addSale() {
+    const date = document.getElementById('f-date').value;
+    const lq = parseInt(document.getElementById('l-qty').value) || 0;
+    const sq = parseInt(document.getElementById('s-qty').value) || 0;
+    if (!lq && !sq) return toast('⚠️ Select at least one tin');
+    if (!date) return toast('⚠️ Pick a date');
+
+    if (lq && (g('l-cash') + g('l-mpesa') + g('l-credit') > lq)) return toast('⚠️ 800g payment qty exceeds sold qty');
+    if (sq && (g('s-cash') + g('s-mpesa') + g('s-credit') > sq)) return toast('⚠️ 400g payment qty exceeds sold qty');
+
+    const entry = {
+      date,
+      large: lq ? { qty: lq, total: lq * LP, cash: g('l-cash') * LP, mpesa: g('l-mpesa') * LP, credit: g('l-credit') * LP } : null,
+      small: sq ? { qty: sq, total: sq * SP, cash: g('s-cash') * SP, mpesa: g('s-mpesa') * SP, credit: g('s-credit') * SP } : null,
+      total: lq * LP + sq * SP
+    };
+
+    try {
+      const btn = document.querySelector('.btn');
+      btn.textContent = 'Processing...'; btn.style.opacity = '0.7';
+      
+      const res = await fetch('/api/sales', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+      
+      btn.textContent = 'Complete Transaction'; btn.style.opacity = '1';
+      
+      if (res.ok) {
+        await loadSales();
+        reset();
+        toast('✅ Transaction Successful!');
+      } else {
+        toast('⚠️ Failed to save');
+      }
+    } catch(err) {
+      toast('⚠️ Network Error');
+    }
+  }
+
+  async function del(id) {
+    if (!confirm('Permanently delete this record?')) return;
+    try {
+      const res = await fetch('/api/sales/' + id, { method: 'DELETE' });
+      if (res.ok) {
+        await loadSales();
+        toast('🗑 Record Deleted');
+      } else {
+        toast('⚠️ Failed to delete');
+      }
+    } catch(err) {
+      toast('⚠️ Network error');
+    }
+  }
+
+  function downloadReceipt(id) {
+    try {
+        window.location.href = '/api/sales/' + id + '/receipt';
+        toast('📄 Generating Receipt...');
+    } catch(err) {
+        toast('⚠️ Download Failed');
+    }
+  }
+
+  function fmtDate(d) {
+    return new Date(d + 'T00:00:00').toLocaleDateString('en-KE', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  function payTags(o) {
+    if (!o) return '';
+    let t = '';
+    if (o.cash > 0)   t += `<span class="tag tag-cash">Cash ${o.cash.toLocaleString()}</span> `;
+    if (o.mpesa > 0)  t += `<span class="tag tag-mpesa">M-Pesa ${o.mpesa.toLocaleString()}</span> `;
+    if (o.credit > 0) t += `<span class="tag tag-credit">Credit ${o.credit.toLocaleString()}</span> `;
+    if (!o.cash && !o.mpesa && !o.credit) t += `<span class="tag tag-size">Unallocated</span>`;
+    return t;
+  }
+
+  function render() {
+    const el = document.getElementById('records');
+    if (!sales.length) { 
+      el.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🥜</div>
+          <div class="empty-text">No transactions recorded yet</div>
+        </div>`; 
+      return; 
+    }
+    el.innerHTML = [...sales].reverse().map(s => `
+      <div class="sale-item">
+        <div class="sale-meta">
+          <div class="sale-date-lbl">${fmtDate(s.date)} <span style="font-weight:400; color:#94A3B8; font-size:0.8rem; margin-left:8px;">#${s.id}</span></div>
+          <div class="sale-total">KES ${s.total.toLocaleString()}</div>
+        </div>
+        
+        ${s.large ? `<div class="sale-details" style="margin-bottom:8px">
+          <span class="tag tag-size">800g</span>
+          <span class="tag tag-qty">×${s.large.qty}</span>
+          ${payTags(s.large)}
+        </div>` : ''}
+        
+        ${s.small ? `<div class="sale-details">
+          <span class="tag tag-size">400g</span>
+          <span class="tag tag-qty">×${s.small.qty}</span>
+          ${payTags(s.small)}
+        </div>` : ''}
+
+        <div class="item-actions">
+          <button class="btn-action receipt" onclick="downloadReceipt(${s.id})">📄 Download Receipt</button>
+          <button class="btn-action del" onclick="del(${s.id})">🗑 Delete</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function stats() {
+    const tod = sales.filter(s => s.date === today);
+    document.getElementById('s-rev').textContent = 'KES ' + tod.reduce((a,s) => a + s.total, 0).toLocaleString();
+    document.getElementById('s-large').textContent = tod.reduce((a,s) => a + (s.large?.qty || 0), 0);
+    document.getElementById('s-small').textContent = tod.reduce((a,s) => a + (s.small?.qty || 0), 0);
+  }
+
+  function reset() {
+    document.getElementById('f-date').value = today;
+    ['l-qty','s-qty'].forEach(id => document.getElementById(id).value = '0');
+    ['l-cash','l-mpesa','l-credit','s-cash','s-mpesa','s-credit'].forEach(id => document.getElementById(id).value = '');
+    updateUI();
+  }
+
+  function exportCSV() {
+    if (!sales.length) return toast('No data yet');
+    const rows = [['ID', 'Date','Size','Qty','Total (KES)','Cash','M-Pesa','Credit']];
+    [...sales].sort((a,b)=>a.id-b.id).forEach(s => {
+      if (s.large) rows.push([s.id, s.date,'800g',s.large.qty,s.large.total,s.large.cash||0,s.large.mpesa||0,s.large.credit||0]);
+      if (s.small) rows.push([s.id, s.date,'400g',s.small.qty,s.small.total,s.small.cash||0,s.small.mpesa||0,s.small.credit||0]);
+    });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([rows.map(r=>r.join(',')).join('\\n')],{type:'text/csv'}));
+    a.download = `mamito_export_${today}.csv`;
+    a.click();
+    toast('📥 CSV Exported!');
+  }
+  
+  function downloadPDF() {
+    try {
+        const date = document.getElementById('f-date').value || today;
+        window.location.href = '/api/sales/report/daily?date=' + date;
+        toast('📄 Generating Daily Report...');
+    } catch(err) {
+        toast('⚠️ Request Failed');
+    }
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.innerHTML = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  loadSales();
+</script>
+</body>
+</html>
