@@ -13,6 +13,17 @@ def init_db():
     if url.startswith("postgres://"):
         url = url.replace("postgres://", "postgresql://", 1)
         
+    import urllib.parse
+    if "@" in url and "://" in url:
+        try:
+            scheme, rest = url.split("://", 1)
+            creds, host_db = rest.rsplit("@", 1)
+            user, pwd = creds.split(":", 1)
+            safe_pwd = urllib.parse.quote(urllib.parse.unquote(pwd))
+            url = f"{scheme}://{user}:{safe_pwd}@{host_db}"
+        except Exception:
+            pass
+            
     print("\nConnecting to database...")
     try:
         engine = create_engine(url)
